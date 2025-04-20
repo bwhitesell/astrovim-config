@@ -6,18 +6,20 @@ return {
     require("astrocore").plugin_opts("nvimtools/none-ls.nvim", { enabled = false })
   end,
   config = function()
-    local null_ls = require("null-ls")
-    local flake8 = require("./null_ls_sources.flake8")
+    local null_ls = require "null-ls"
+    local flake8 = require "./null_ls_sources.flake8"
 
-    null_ls.setup({
+    null_ls.setup {
       debug = true,
       autostart = true, -- ✅ 100% guaranteed to apply
       sources = {
         flake8,
-        null_ls.builtins.diagnostics.mypy.with({
+        null_ls.builtins.diagnostics.ktlint,
+        null_ls.builtins.diagnostics.mypy.with {
+          command = "mypy",
           extra_args = { "--strict" },
-        }),
+        },
       },
-    })
+    }
   end,
 }

@@ -1,4 +1,3 @@
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -41,10 +40,16 @@ return {
       pyright = {
         -- Keep the LSP, but disable its diagnostics
         on_attach = function(client, bufnr)
-          vim.notify("🚫 Pyright diagnostics muted")
+          vim.notify "🚫 Pyright diagnostics muted"
           client.handlers["textDocument/publishDiagnostics"] = function() end
         end,
-      }
+      },
+      kotlin_language_server = {
+        on_attach = function(client, bufnr)
+          vim.notify "🔧 Disabling formatting for Kotlin LSP"
+          client.server_capabilities.documentFormattingProvider = false
+        end,
+      },
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
